@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .header img {
+            height: 40px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .content {
+            padding: 20px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        .section h3 {
+            margin-top: 0;
+        }
+        .progress-bar {
+            height: 20px;
+            border-radius: 10px;
+            background-color: #ddd;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar div {
+            height: 100%;
+            text-align: center;
+            color: white;
+            background-color: #4CAF50;
+        }
+        .footer {
+            text-align: center;
+            margin: 20px 0;
+        }
+        canvas {
+            margin: 20px auto;
+            display: block;
+            max-width: 400px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="header">
+        
+        <h1><img src="CK.png" alt="Company Logo"></h1>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="content">
+        <h2>Manager Dashboard</h2>
+
+        <!-- Text-Based Dashboard -->
+        <div class="dashboard">
+            <div class="section">
+                <h3>Store Section</h3>
+                <p>Current Stock: 200</p>
+                <p>Total Units: 500</p>
+                <p>Status: In Progress</p>
+                <button>Update Status</button>
+            </div>
+
+            <div class="section">
+                <h3>Cutting Section</h3>
+                <p>Progress: 60%</p>
+                <p>Status: In Progress</p>
+                <div class="progress-bar">
+                    <div style="width: 60%; background-color: #FFEB3B;">60%</div>
+                </div>
+                <button>Update Status</button>
+            </div>
+
+            <div class="section">
+                <h3>Production Section</h3>
+                <p>Units Produced: 300</p>
+                <p>Status: In Progress</p>
+                <div class="progress-bar">
+                    <div style="width: 60%; background-color: #FFEB3B;">60%</div>
+                </div>
+                <button>Update Status</button>
+            </div>
+
+            <div class="section">
+                <h3>Quality Section</h3>
+                <p>Inspection: Pending</p>
+                <p>Notes: Issues Found</p>
+                <p>Status: Pending</p>
+                <button>Update Status</button>
+            </div>
+
+            <div class="section">
+                <h3>Finishing Section</h3>
+                <p>Status: In Progress</p>
+                <p>Notes: No Issues</p>
+                <div class="progress-bar">
+                    <div style="width: 60%; background-color: #FFEB3B;">60%</div>
+                </div>
+                <button>Update Status</button>
+            </div>
+
+            <div class="section">
+                <h3>Dispatch Section</h3>
+                <p>Status: Pending</p>
+                <p>Shipment: Awaiting Final Dispatch</p>
+                <button>Update Status</button>
+            </div>
+        </div>
+
+        <!-- Graphical Representation -->
+        <div>
+            <h2>Section Progress Overview</h2>
+            <canvas id="storeChart"></canvas>
+            <canvas id="cuttingChart"></canvas>
+            <canvas id="productionChart"></canvas>
+            <canvas id="qualityChart"></canvas>
+            <canvas id="finishingChart"></canvas>
+            <canvas id="dispatchChart"></canvas>
+        </div>
+    </div>
+
+    <div class="footer">
+        <button onclick="adminPanel()">Admin Panel</button>
+        <button onclick="viewRealtime()">View Real-time Status</button>
+    </div>
+
+    <script>
+        function logout() {
+            alert('Logged out!');
+        }
+
+        function adminPanel() {
+            alert('Navigating to Admin Panel');
+        }
+
+        function viewRealtime() {
+            alert('Viewing Real-time Status');
+        }
+
+        function createChart(canvasId, data, colors, labels) {
+            var ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+
+        createChart('storeChart', [60, 40], ['#4CAF50', '#F44336'], ['Available', 'Used']);
+        createChart('cuttingChart', [60, 40], ['#FFEB3B', '#F44336'], ['Completed', 'Pending']);
+        createChart('productionChart', [60, 40], ['#FFEB3B', '#F44336'], ['Produced', 'Pending']);
+        createChart('qualityChart', [30, 70], ['#4CAF50', '#F44336'], ['Passed', 'Failed']);
+        createChart('finishingChart', [60, 40], ['#FFEB3B', '#F44336'], ['Completed', 'Pending']);
+        createChart('dispatchChart', [40, 60], ['#4CAF50', '#F44336'], ['Dispatched', 'Pending']);
+    </script>
+</body>
+</html>
